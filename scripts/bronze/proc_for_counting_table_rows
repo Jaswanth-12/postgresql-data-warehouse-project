@@ -1,0 +1,18 @@
+CREATE OR REPLACE PROCEDURE bronze.count_table_rows(tn VARCHAR)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	cnt INT := 0;
+	start_time TIMESTAMPTZ;
+	end_time TIMESTAMPTZ;
+	time_taken INTERVAL;
+BEGIN
+	start_time := clock_timestamp();
+	EXECUTE 'SELECT COUNT(*) FROM bronze.' || quote_ident(tn)
+	INTO cnt;
+	end_time := clock_timestamp();
+	time_taken := end_time - start_time;
+	RAISE NOTICE 'The table bronze.% contains exactly % rows.', tn, cnt;
+	RAISE NOTICE 'Time taken by query: %', time_taken;
+END;
+$$;
