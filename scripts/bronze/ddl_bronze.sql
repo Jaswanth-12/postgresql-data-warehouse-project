@@ -1,3 +1,7 @@
+/*
+Creating and Loading Tables into Bronze Schema
+*/
+
 CREATE TABLE bronze.crm_cust_info (
     cst_id             INT,
     cst_key            VARCHAR(50),
@@ -59,34 +63,3 @@ SELECT * FROM bronze.erp_cust_az12;
 SELECT * FROM bronze.erp_loc_a101;
 
 SELECT * FROM bronze.erp_px_cat_g1v2;
-
-CREATE OR REPLACE PROCEDURE bronze.count_table_rows(tn VARCHAR)
-LANGUAGE plpgsql
-AS $$
-DECLARE
-	cnt INT := 0;
-	start_time TIMESTAMPTZ;
-	end_time TIMESTAMPTZ;
-	time_taken INTERVAL;
-BEGIN
-	-- 1. Capture the exact start time
-	start_time := clock_timestamp();
-
-	-- 2. Execute the dynamic count query
-	EXECUTE 'SELECT COUNT(*) FROM bronze.' || quote_ident(tn)
-	INTO cnt;
-
-	-- 3. Capture the exact end time
-	end_time := clock_timestamp();
-	
-	-- 4. Calculate the difference
-	time_taken := end_time - start_time;
-
-	-- 5. Display both the row count and the execution duration
-	RAISE NOTICE 'The table bronze.% contains exactly % rows.', tn, cnt;
-	RAISE NOTICE 'Time taken by query: %', time_taken;
-END;
-$$;
-
-CALL bronze.count_table_rows('crm_sales_details');
-CALL bronze.count_table_rows('erp_loc_a101');
