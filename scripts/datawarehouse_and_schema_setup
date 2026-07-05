@@ -1,0 +1,15 @@
+/*
+1. Creating DataWarehouse Database
+2. Adding Schemas - Bronze, Silver, Gold
+
+Warning:
+  This script removes the entire DataWarehouse Database Permanently. Proceed with Caution
+*/
+
+DROP DATABASE IF EXISTS "DataWarehouse" WITH (FORCE);
+
+CREATE DATABASE DataWarehouse;
+
+CREATE SCHEMA bronze;
+CREATE SCHEMA silver;
+CREATE SCHEMA gold;
