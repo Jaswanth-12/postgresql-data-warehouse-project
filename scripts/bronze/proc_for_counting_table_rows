@@ -1,3 +1,8 @@
+/*
+procedure for counting table rows
+parameter: table name
+*/
+
 CREATE OR REPLACE PROCEDURE bronze.count_table_rows(tn VARCHAR)
 LANGUAGE plpgsql
 AS $$
